@@ -1,0 +1,6 @@
+Employee:5,0
+Manager:1,0
+Customer:10,0
+Shopping Item:150,0
+Cash Register:5,0
+Store:1,0
