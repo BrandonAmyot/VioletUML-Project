@@ -43,6 +43,10 @@ public class MenuFactory
         if (this.editMenu == null)
         {
             this.editMenu = new EditMenu(mainFrame);
+            
+            
+//            LoginMenu window = new LoginMenu();
+//			window.frame.setVisible(true);
         }
         return this.editMenu;
     }
