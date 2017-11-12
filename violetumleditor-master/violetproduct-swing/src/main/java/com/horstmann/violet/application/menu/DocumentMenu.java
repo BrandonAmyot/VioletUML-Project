@@ -37,7 +37,8 @@ public class DocumentMenu extends JMenu
         setEnabled(!workspaceList.isEmpty());
         IWorkspace activeWorkspace = this.mainFrame.getActiveWorkspace();
         removeAll();
-        for (final IWorkspace aWorkspace : workspaceList) {
+        for (final IWorkspace aWorkspace : workspaceList) 
+        {
             String title = aWorkspace.getTitle();
             final JMenuItem menuItem = new JMenuItem(title);
             add(menuItem);
@@ -56,6 +57,39 @@ public class DocumentMenu extends JMenu
                 menuItem.setIcon(activeWorkspaceIcon);
             }
         }
+        
+      //Pie Chart for stats.
+        String pieChartTitle = "Generate Pie Chart";
+        final JMenuItem pieChartMenuItem = new JMenuItem(pieChartTitle);
+        add(pieChartMenuItem);
+        pieChartMenuItem.addActionListener(new ActionListener()
+        {
+          
+          @Override
+          public void actionPerformed(ActionEvent e)
+          {
+           PieChart pieChart = new PieChart();   
+          }
+        });
+        
+        pieChartMenuItem.setEnabled(false);
+        
+        //Login menu item.
+        String loginTitle = "Login";
+        final JMenuItem loginMenuItem = new JMenuItem(loginTitle);
+        
+        LoginMenu login = new LoginMenu();
+        login.pieChartMenuItem = pieChartMenuItem;
+        add(loginMenuItem);
+        loginMenuItem.addActionListener(new ActionListener()
+        {
+          
+          @Override
+          public void actionPerformed(ActionEvent e)
+          {
+             login.frame.setVisible(true);
+          }
+        });
     }
     
     

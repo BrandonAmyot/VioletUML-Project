@@ -21,8 +21,12 @@
 
 package com.horstmann.violet.product.diagram.sequence;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.*;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import com.horstmann.violet.product.diagram.abstracts.AbstractGraph;
 import com.horstmann.violet.product.diagram.abstracts.edge.IEdge;
@@ -39,37 +43,135 @@ import com.horstmann.violet.product.diagram.sequence.node.LifelineNode;
 /**
  * A UML sequence diagram.
  */
-public class SequenceDiagramGraph extends AbstractGraph
-{
-    @Override
-    public boolean addNode(INode newNode, Point2D p)
+public class SequenceDiagramGraph extends AbstractGraph {
+	// Variables used for check methods
+	public static boolean areBarsEmpty = false;
+	public static boolean shouldSuggestPattern = false;
+
+	private boolean shouldCheckAgain = true;
+	private boolean runOnce = false;
+
+	@Override
+	public boolean addNode(INode newNode, Point2D p) {
+		INode foundNode = findNode(p);
+		if (foundNode == null && newNode.getClass().isAssignableFrom(ActivationBarNode.class)) {
+			return false;
+		}
+
+		return super.addNode(newNode, p);
+	}
+
+	// J
+	// CHANGED*******************************************************************
+	// Override draw() to automatically call check methods frequently
+	@Override
+	public void draw(Graphics2D graphics) 
+	{
+		super.draw(graphics);
+		checkEmptyBars();
+		checkGraspSuggestion();
+
+//			if (runOnce) 
+//			{
+//				JFrame frame = new JFrame();
+//				JOptionPane.showMessageDialog(frame,
+//						"An obejct has too many outgoing message calls. To lower dependencies, use the controller pattern.",
+//						"Message Calls!", JOptionPane.WARNING_MESSAGE);
+//				
+//				runOnce = false;
+//			}
+
+
+	}
+
+
+	//J CHANGED*******************************************************************
+    // Checks through entire graph to see if any activation bar has more than 5 calls ongoing
+    public void checkGraspSuggestion()
     {
-        INode foundNode = findNode(p);
-        if (foundNode == null && newNode.getClass().isAssignableFrom(ActivationBarNode.class)) {
-            return false;
-        }
-        return super.addNode(newNode, p);
+    	for(INode node : this.getAllNodes())
+    	{
+            if(node instanceof ActivationBarNode)
+            {    			   			
+                if(this.getAllEdges().size() > 0)
+                {
+                    int edge_count = 0;
+                    for(IEdge edge : this.getAllEdges())
+                    {
+                        if(node == edge.getStartNode())
+                        {
+                        	edge_count++;
+                        }
+                    }
+                    
+                    if(edge_count >= 5)
+                    {
+                    	shouldSuggestPattern = true;
+                    	
+                    	//if(shouldCheckAgain)
+//    						{
+//    							runOnce =true;
+//    							shouldCheckAgain = false;
+//    						}
+                    	
+                    	return;
+                    }
+                }
+
+                else
+                {
+                	//shouldSuggestPattern = false;
+                	shouldSuggestPattern = false;
+                }
+        	}   	    		
+		}
     }
+	
 
-    public List<INode> getNodePrototypes() {
-        return NODE_PROTOTYPES;
-    }
+		// J
+		// CHANGED*******************************************************************
+		// Checks through entire graph to see if at least 1 activation bar has no
+		// connecting edges (meaning it's empty)
+		public void checkEmptyBars() {
+			for (INode node : this.getAllNodes()) {
+				if (node instanceof ActivationBarNode) {
+					if (this.getAllEdges().size() > 0) {
+						int edge_count = 0;
+						for (IEdge edge : this.getAllEdges()) {
+							if (node != edge.getStartNode() && node != edge.getEndNode()) {
+								edge_count++;
 
-    public List<IEdge> getEdgePrototypes() {
-        return EDGE_PROTOTYPES;
-    }
+								if (edge_count == this.getAllEdges().size()) {
+									areBarsEmpty = true;
+									return;
+								} else {
+									areBarsEmpty = false;
+								}
+							} else {
+								areBarsEmpty = false;
+							}
+						}
+					}
 
-    private static final List<INode> NODE_PROTOTYPES = new ArrayList<INode>(Arrays.asList(
-            new LifelineNode(),
-            new ActivationBarNode(),
-            new CombinedFragmentNode(),
-            new NoteNode()
-    ));
+					else {
+						areBarsEmpty = true;
+						return;
+					}
+				}
+			}
+		}
 
-    private static final List<IEdge> EDGE_PROTOTYPES = new ArrayList<IEdge>(Arrays.asList(
-            new SynchronousCallEdge(),
-            new AsynchronousCallEdge(),
-            new ReturnEdge(),
-            new NoteEdge()
-    ));
-}
+		public List<INode> getNodePrototypes() {
+			return NODE_PROTOTYPES;
+		}
+
+		public List<IEdge> getEdgePrototypes() {
+			return EDGE_PROTOTYPES;
+		}
+
+		private static final List<INode> NODE_PROTOTYPES = new ArrayList<INode>(
+				Arrays.asList(new LifelineNode(), new ActivationBarNode(), new CombinedFragmentNode(), new NoteNode()));
+
+		private static final List<IEdge> EDGE_PROTOTYPES = new ArrayList<IEdge>(
+				Arrays.asList(new SynchronousCallEdge(), new AsynchronousCallEdge(), new ReturnEdge(), new NoteEdge()));
+	}

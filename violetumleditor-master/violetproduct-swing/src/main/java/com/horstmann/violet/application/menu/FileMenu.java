@@ -69,9 +69,11 @@ import com.horstmann.violet.framework.plugin.IDiagramPlugin;
 import com.horstmann.violet.framework.plugin.PluginRegistry;
 import com.horstmann.violet.framework.userpreferences.UserPreferencesService;
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
+import com.horstmann.violet.product.diagram.sequence.SequenceDiagramGraph;
 import com.horstmann.violet.workspace.IWorkspace;
 import com.horstmann.violet.workspace.Workspace;
 import com.thoughtworks.xstream.io.StreamException;
+import javax.swing.JFrame;
 
 /**
  * Represents the file menu on the editor frame
@@ -315,6 +317,10 @@ public class FileMenu extends JMenu
         });
     }
 
+    
+    
+    
+    
     /**
      * Init 'save as' menu entry
      */
@@ -324,18 +330,40 @@ public class FileMenu extends JMenu
         {
             public void actionPerformed(ActionEvent e)
             {
-                IWorkspace workspace = (Workspace) mainFrame.getActiveWorkspace();
-                if (workspace != null)
+            	//J CHANGED*******************************************************************
+            	// Give an error depending on what the check methods return               
+                if(SequenceDiagramGraph.areBarsEmpty == true)
                 {
-                    IGraphFile graphFile = workspace.getGraphFile();
-                    graphFile.saveToNewLocation();
-                    userPreferencesService.addRecentFile(graphFile);
+                	JFrame frame = new JFrame();
+                    JOptionPane.showMessageDialog(frame, "Cannot save sequence diagram with an empty activation bar,", "Empty Activation Bar!", JOptionPane.ERROR_MESSAGE);
                 }
+                
+                else if(SequenceDiagramGraph.shouldSuggestPattern == true)
+                {
+                	JFrame frame = new JFrame();
+                    JOptionPane.showMessageDialog(frame, "An obejct has too many outgoing message calls. To lower dependencies, use the controller pattern.", "Message Calls!", JOptionPane.WARNING_MESSAGE);
+                }
+            	
+                else
+                {
+	                IWorkspace workspace = (Workspace) mainFrame.getActiveWorkspace();
+	                if (workspace != null)
+	                {
+	                    IGraphFile graphFile = workspace.getGraphFile();
+	                    graphFile.saveToNewLocation();
+	                    userPreferencesService.addRecentFile(graphFile);
+	                }
+                }
+                
             }
         });
         if (this.fileChooserService == null) this.fileSaveAsItem.setEnabled(false);
     }
 
+    
+    
+    
+    
     /**
      * Init save menu entry
      */
@@ -345,12 +373,29 @@ public class FileMenu extends JMenu
         {
             public void actionPerformed(ActionEvent e)
             {
-                IWorkspace workspace = mainFrame.getActiveWorkspace();
-                if (workspace != null)
+            	//J CHANGED*******************************************************************
+            	// Give an error depending on what the check methods return               
+                if(SequenceDiagramGraph.areBarsEmpty == true)
                 {
-                    IGraphFile graphFile = workspace.getGraphFile();
-                    graphFile.save();
-                    userPreferencesService.addRecentFile(graphFile);
+                	JFrame frame = new JFrame();
+                    JOptionPane.showMessageDialog(frame, "Cannot save sequence diagram with an empty activation bar,", "Empty Activation Bar!", JOptionPane.ERROR_MESSAGE);
+                }
+                
+                else if(SequenceDiagramGraph.shouldSuggestPattern == true)
+                {
+                	JFrame frame = new JFrame();
+                    JOptionPane.showMessageDialog(frame, "An obejct has too many outgoing message calls. To lower dependencies, use the controller pattern.", "Message Calls!", JOptionPane.WARNING_MESSAGE);
+                }
+                
+                else
+                {
+	                IWorkspace workspace = mainFrame.getActiveWorkspace();
+	                if (workspace != null)
+	                {
+	                    IGraphFile graphFile = workspace.getGraphFile();
+	                    graphFile.save();
+	                    userPreferencesService.addRecentFile(graphFile);
+	                }
                 }
             }
         });
@@ -360,6 +405,10 @@ public class FileMenu extends JMenu
         }
     }
 
+    
+    
+    
+    
     /**
      * Init print menu entry
      */
@@ -381,7 +430,7 @@ public class FileMenu extends JMenu
 
     /**
      * Init close menu entry
-     */
+     **/
     private void initFileCloseItem()
     {
         this.fileCloseItem.addActionListener(new ActionListener()
