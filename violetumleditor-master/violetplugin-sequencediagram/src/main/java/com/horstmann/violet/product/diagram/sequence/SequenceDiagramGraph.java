@@ -21,6 +21,7 @@
 
 package com.horstmann.violet.product.diagram.sequence;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.*;
 
@@ -40,17 +41,120 @@ import com.horstmann.violet.product.diagram.sequence.node.LifelineNode;
  * A UML sequence diagram.
  */
 public class SequenceDiagramGraph extends AbstractGraph
-{
+{	
+	// Variables used for check methods
+	public static boolean any_empty_activation_bars = false;
+	public static boolean suggest_grasp_pattern = false;
+	
     @Override
     public boolean addNode(INode newNode, Point2D p)
-    {
+    { 	
         INode foundNode = findNode(p);
-        if (foundNode == null && newNode.getClass().isAssignableFrom(ActivationBarNode.class)) {
+        if (foundNode == null && newNode.getClass().isAssignableFrom(ActivationBarNode.class)) 
+        {
             return false;
         }
-        return super.addNode(newNode, p);
+                
+        return super.addNode(newNode, p);      
     }
+    
+  //J CHANGED*******************************************************************
+    // Override draw() to automatically call check methods frequently   
+    @Override
+    public void draw(Graphics2D graphics)
+    {
+    	super.draw(graphics);
+    	checkEmptyBars();
+    	checkGraspSuggestion();  
+    }
+ 
+    
+    
+    
+  //J CHANGED*******************************************************************
+    // Checks through entire graph to see if any activation bar has more than 5 calls ongoing
+    public void checkGraspSuggestion()
+    {
+    	for(INode node : this.getAllNodes())
+    	{
+            if(node instanceof ActivationBarNode)
+            {    			   			
+                if(this.getAllEdges().size() > 0)
+                {
+                    int edge_count = 0;
+                    for(IEdge edge : this.getAllEdges())
+                    {
+                        if(node == edge.getStartNode())
+                        {
+                        	edge_count++;
+                        }
+                    }
+                    
+                    if(edge_count >= 5)
+                    {
+                    	suggest_grasp_pattern = true;
+                    	return;
+                    }
+                }
 
+                else
+                {
+                	suggest_grasp_pattern = false;
+                }
+        	}   	    		
+		}
+    }
+    
+    
+    
+    
+  //J CHANGED*******************************************************************
+    // Checks through entire graph to see if at least 1 activation bar has no connecting edges (meaning it's empty)
+    public void checkEmptyBars()
+    {
+    	for(INode node : this.getAllNodes())
+    	{
+            if(node instanceof ActivationBarNode)
+            {    			   			
+                if(this.getAllEdges().size() > 0)
+                {
+                    int edge_count = 0;
+                    for(IEdge edge : this.getAllEdges())
+                    {
+                        if(node != edge.getStartNode() && node != edge.getEndNode())
+                        {
+                            edge_count++;
+
+                            if(edge_count == this.getAllEdges().size())
+                            {
+                                any_empty_activation_bars = true;
+                                return;
+                            }
+                            else
+                            {
+                                any_empty_activation_bars = false;
+                            }
+                        }
+                        else
+                        {
+                            any_empty_activation_bars = false;
+                        }
+                    }
+                }
+
+                else
+                {
+                	any_empty_activation_bars = true;                            
+                	return;
+                }
+        	}   	    		
+		}
+    }
+    
+
+    
+
+    
     public List<INode> getNodePrototypes() {
         return NODE_PROTOTYPES;
     }
