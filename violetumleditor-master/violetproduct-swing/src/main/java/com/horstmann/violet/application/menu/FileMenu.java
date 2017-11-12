@@ -332,13 +332,13 @@ public class FileMenu extends JMenu
             {
             	//J CHANGED*******************************************************************
             	// Give an error depending on what the check methods return               
-                if(SequenceDiagramGraph.any_empty_activation_bars == true)
+                if(SequenceDiagramGraph.areBarsEmpty == true)
                 {
                 	JFrame frame = new JFrame();
                     JOptionPane.showMessageDialog(frame, "Cannot save sequence diagram with an empty activation bar,", "Empty Activation Bar!", JOptionPane.ERROR_MESSAGE);
                 }
                 
-                else if(SequenceDiagramGraph.suggest_grasp_pattern == true)
+                else if(SequenceDiagramGraph.shouldSuggestPattern == true)
                 {
                 	JFrame frame = new JFrame();
                     JOptionPane.showMessageDialog(frame, "An obejct has too many outgoing message calls. To lower dependencies, use the controller pattern.", "Message Calls!", JOptionPane.WARNING_MESSAGE);
@@ -375,13 +375,13 @@ public class FileMenu extends JMenu
             {
             	//J CHANGED*******************************************************************
             	// Give an error depending on what the check methods return               
-                if(SequenceDiagramGraph.any_empty_activation_bars == true)
+                if(SequenceDiagramGraph.areBarsEmpty == true)
                 {
                 	JFrame frame = new JFrame();
                     JOptionPane.showMessageDialog(frame, "Cannot save sequence diagram with an empty activation bar,", "Empty Activation Bar!", JOptionPane.ERROR_MESSAGE);
                 }
                 
-                else if(SequenceDiagramGraph.suggest_grasp_pattern == true)
+                else if(SequenceDiagramGraph.shouldSuggestPattern == true)
                 {
                 	JFrame frame = new JFrame();
                     JOptionPane.showMessageDialog(frame, "An obejct has too many outgoing message calls. To lower dependencies, use the controller pattern.", "Message Calls!", JOptionPane.WARNING_MESSAGE);
