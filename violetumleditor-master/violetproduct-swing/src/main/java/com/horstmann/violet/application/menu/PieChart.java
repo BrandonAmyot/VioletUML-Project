@@ -19,7 +19,7 @@ public class PieChart {
     private int outMessageList[];
     private int numberObjectsList = 0;
     
-    private  static MainFrame mainFrame ;
+    public static MainFrame mainFrame ;
     IWorkspace workspace = mainFrame.getActiveWorkspace();
     private IGraphFile graphFile = workspace.getGraphFile();
     private IGraph graph  = graphFile.getGraph();
