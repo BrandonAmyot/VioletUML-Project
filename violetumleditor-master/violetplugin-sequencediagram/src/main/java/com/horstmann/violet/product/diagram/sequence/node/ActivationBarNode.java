@@ -341,7 +341,6 @@ public class ActivationBarNode extends ColorableNode
         {
             if(start == connectedEdge.getEndNode() && end == connectedEdge.getStartNode())
             {
-            		System.out.println("newline");
                 return true;
             }
         }
@@ -365,7 +364,6 @@ public class ActivationBarNode extends ColorableNode
         {
             if(start.getParents().get(0) != end.getParents().get(0))
             {
-            		System.out.println("newline");
                 return true;
             }
             else if(start == end)

@@ -28,6 +28,8 @@ import com.horstmann.violet.framework.injection.resources.annotation.ResourceBun
 import com.horstmann.violet.framework.printer.PrintEngine;
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
 
+import com.horstmann.violet.framework.file.StatisticsAnalyzer;
+
 public class GraphFile implements IGraphFile
 {
     /**
