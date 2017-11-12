@@ -51,7 +51,7 @@ public class XHTMLPersistenceService implements IFilePersistenceService
         try
         {
             OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
-        	InputStream templateAsStream = this.getClass().getResourceAsStream(TEMPLATE_FILE);
+            InputStream templateAsStream = this.getClass().getResourceAsStream(TEMPLATE_FILE);
             String template = getInputStreamContent(templateAsStream);
             ByteArrayOutputStream graphOutputStream = new ByteArrayOutputStream();
             xstreamService.write(graph, graphOutputStream);
