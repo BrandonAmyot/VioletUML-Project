@@ -129,7 +129,7 @@ public class StatisticsAnalyzer {
 			// Write # of relationships
 			pw.println(this.numOfActivationBars + " " + this.numOfSynchronousCalls + " " + this.numOfASynchronousCalls + " " + this.numOfReturnEdges);
 			
-			// Write name + # of methods + CBO for each class
+			// Write name + # of methods
 			for (LifelineNode classNode : lifelineNodesList) {
 				pw.println("\"" + classNode.getName() + "\"" /*+ "\" " + classNode.getNumOfMethods() + " " + classNode.getCBO()*/);
 			}

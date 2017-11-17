@@ -27,10 +27,10 @@ public class PieChart {
     
     PieChart()
     {
-    	System.out.println(graphFile);
+    		System.out.println(graphFile);
     	
-    	analyzer = new StatisticsAnalyzer(graph, "graph.seq.violet.html");
-    	analyzer.writeStats("test.txt");
+    		analyzer = new StatisticsAnalyzer(graph, "graph.seq.violet.html");
+    		analyzer.writeStats("test.txt");
         readFile("Stats.txt");
         createPieChart();
     }
