@@ -18,17 +18,19 @@ public class PieChart {
     private String objectNameList[];
     private int outMessageList[];
     private int numberObjectsList = 0;
-    
-    public static MainFrame mainFrame ;
-    IWorkspace workspace = mainFrame.getActiveWorkspace();
-    private IGraphFile graphFile = workspace.getGraphFile();
+//    
+//    public static MainFrame mainFrame ;
+//    IWorkspace workspace = mainFrame.getActiveWorkspace();
+    public static IGraphFile graphFile;
     private IGraph graph  = graphFile.getGraph();
     StatisticsAnalyzer analyzer;
     
     PieChart()
     {
-    		analyzer = new StatisticsAnalyzer(graph, "graph.seq.violet.html");
-    		analyzer.writeStats("test.txt");
+    	System.out.println(graphFile);
+    	
+    	analyzer = new StatisticsAnalyzer(graph, "graph.seq.violet.html");
+    	analyzer.writeStats("test.txt");
         readFile("Stats.txt");
         createPieChart();
     }

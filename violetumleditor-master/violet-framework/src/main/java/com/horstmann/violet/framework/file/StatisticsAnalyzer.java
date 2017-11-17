@@ -109,7 +109,7 @@ public class StatisticsAnalyzer {
 		}
 		
 		for (IEdge edge : edges) {
-			if(edge.getClass().getSimpleName().equals("DependencyEdge")) numOfDependency++;
+			if(edge.getClass().getSimpleName().equals("SynchronousCallEdge")) numOfDependency++;
 			if(edge.getClass().getSimpleName().equals("AssociationEdge")) numOfAssociation++;
 			if(edge.getClass().getSimpleName().equals("AggregationEdge")) numOfAggregation++;
 			if(edge.getClass().getSimpleName().equals("CompositionEdge")) numOfComposition++;

@@ -116,6 +116,12 @@ public class SequenceDiagramGraph extends AbstractGraph {
                     	
                     	return;
                     }
+                    else
+                    {
+                    	shouldSuggestPattern = false;
+                    
+                    }
+                    
                 }
 
                 else
