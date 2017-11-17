@@ -98,8 +98,7 @@ public class StatisticsAnalyzer {
 			if(node.getClass().getSimpleName().equals("LifelineNode")) {
 				String id = node.getId().toString();
 				String name = getName(html, id);
-//				int numOfMethods = getNumOfMethods(html, id);
-				
+//				int numOfMethods = getNumOfMethods(html, id);			
 				
 				LifelineNode classNode = new LifelineNode(id, name);
 //				classNode.setNumOfMethods(numOfMethods);
@@ -109,10 +108,10 @@ public class StatisticsAnalyzer {
 		}
 		
 		for (IEdge edge : edges) {
-			if(edge.getClass().getSimpleName().equals("DependencyEdge")) numOfActivationBars++;
-			if(edge.getClass().getSimpleName().equals("AssociationEdge")) numOfSynchronousCalls++;
-			if(edge.getClass().getSimpleName().equals("AggregationEdge")) numOfASynchronousCalls++;
-			if(edge.getClass().getSimpleName().equals("CompositionEdge")) numOfReturnEdges++;
+//			if(edge.getClass().getSimpleName().equals("SynchronousCallEdge")) numOfActivationBars++;
+			if(edge.getClass().getSimpleName().equals("SynchronousCallEdge")) numOfSynchronousCalls++;
+			if(edge.getClass().getSimpleName().equals("AsynchronousCallEdge")) numOfASynchronousCalls++;
+			if(edge.getClass().getSimpleName().equals("ReturnEdge")) numOfReturnEdges++;
 		}
 		
 	}
