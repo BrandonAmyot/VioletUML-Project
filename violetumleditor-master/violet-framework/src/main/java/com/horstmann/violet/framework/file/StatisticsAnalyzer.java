@@ -131,7 +131,7 @@ public class StatisticsAnalyzer {
 			
 			// Write name + # of methods + CBO for each class
 			for (LifelineNode classNode : lifelineNodesList) {
-				pw.println("\"" + classNode.getName() /*+ "\" " + classNode.getNumOfMethods() + " " + classNode.getCBO()*/);
+				pw.println("\"" + classNode.getName() + "\"" /*+ "\" " + classNode.getNumOfMethods() + " " + classNode.getCBO()*/);
 			}
 
 			pw.close();
