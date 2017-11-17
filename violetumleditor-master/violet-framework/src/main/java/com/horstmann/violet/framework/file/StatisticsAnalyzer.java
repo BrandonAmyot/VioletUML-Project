@@ -26,40 +26,40 @@ import com.horstmann.violet.product.diagram.abstracts.node.INode;
 public class StatisticsAnalyzer {
 	private IGraph graph;
 	private String HtmlFile;
-	private int numOfDependency;
-	private int numOfAssociation;
-	private int numOfAggregation;
-	private int numOfComposition;
-	private List<ClassNodes> classNodes;
+	private int numOfActivationBars;
+	private int numOfSynchronousCalls;
+	private int numOfASynchronousCalls;
+	private int numOfReturnEdges;
+	private List<LifelineNode> lifelineNodesList;
 
-	private class ClassNodes {
+	private class LifelineNode {
 		String id;
 		String name;
-		int numOfCBO;
-		int numOfMethods;
+//		int numOfCBO;
+//		int numOfMethods;
 		
-		public ClassNodes(String id, String name) {
+		public LifelineNode(String id, String name) {
 			this.id = id;
 			this.name = name;
-			numOfCBO = 0;
-			numOfMethods = 0;
+//			numOfCBO = 0;
+//			numOfMethods = 0;
 		}
 		
-		public void setCBO(int cbo) {
-			numOfCBO = cbo;
-		}
-		
-		public int getCBO() {
-			return numOfCBO;
-		}
-		
-		public void setNumOfMethods(int num) {
-			numOfMethods = num;
-		}
-		
-		public int getNumOfMethods() {
-			return numOfMethods;
-		}
+//		public void setCBO(int cbo) {
+//			numOfCBO = cbo;
+//		}
+//		
+//		public int getCBO() {
+//			return numOfCBO;
+//		}
+//		
+//		public void setNumOfMethods(int num) {
+//			numOfMethods = num;
+//		}
+//		
+//		public int getNumOfMethods() {
+//			return numOfMethods;
+//		}
 		
 		public String getId() {
 			return id;
@@ -78,11 +78,11 @@ public class StatisticsAnalyzer {
 	public StatisticsAnalyzer(IGraph graph, String HtmlFile) {
 		this.graph = graph;
 		this.HtmlFile = HtmlFile;
-		numOfDependency = 0;
-		numOfAssociation = 0;
-		numOfAggregation = 0;
-		numOfComposition = 0;
-		classNodes = new ArrayList<ClassNodes>();
+		numOfActivationBars = 0;
+		numOfSynchronousCalls = 0;
+		numOfASynchronousCalls = 0;
+		numOfReturnEdges = 0;
+		lifelineNodesList = new ArrayList<LifelineNode>();
 		
 		
 		analyze();
@@ -95,24 +95,24 @@ public class StatisticsAnalyzer {
 		String html = stringifyHtml();
 		
 		for (INode node : Graphnodes) {
-			if(node.getClass().getSimpleName().equals("ClassNode")) {
+			if(node.getClass().getSimpleName().equals("LifelineNode")) {
 				String id = node.getId().toString();
 				String name = getName(html, id);
-				int numOfMethods = getNumOfMethods(html, id);
+//				int numOfMethods = getNumOfMethods(html, id);
 				
 				
-				ClassNodes classNode = new ClassNodes(id, name);
-				classNode.setNumOfMethods(numOfMethods);
+				LifelineNode classNode = new LifelineNode(id, name);
+//				classNode.setNumOfMethods(numOfMethods);
 				
-				classNodes.add(classNode);
+				lifelineNodesList.add(classNode);
 			}
 		}
 		
 		for (IEdge edge : edges) {
-			if(edge.getClass().getSimpleName().equals("DependencyEdge")) numOfDependency++;
-			if(edge.getClass().getSimpleName().equals("AssociationEdge")) numOfAssociation++;
-			if(edge.getClass().getSimpleName().equals("AggregationEdge")) numOfAggregation++;
-			if(edge.getClass().getSimpleName().equals("CompositionEdge")) numOfComposition++;
+			if(edge.getClass().getSimpleName().equals("DependencyEdge")) numOfActivationBars++;
+			if(edge.getClass().getSimpleName().equals("AssociationEdge")) numOfSynchronousCalls++;
+			if(edge.getClass().getSimpleName().equals("AggregationEdge")) numOfASynchronousCalls++;
+			if(edge.getClass().getSimpleName().equals("CompositionEdge")) numOfReturnEdges++;
 		}
 		
 	}
@@ -124,14 +124,14 @@ public class StatisticsAnalyzer {
 			System.out.println("Writing statistics...");
 			
 			// Write # of classes on first line
-			pw.println(classNodes.size());
+			pw.println(lifelineNodesList.size());
 			
 			// Write # of relationships
-			pw.println(this.numOfDependency + " " + this.numOfAssociation + " " + this.numOfAggregation + " " + this.numOfComposition);
+			pw.println(this.numOfActivationBars + " " + this.numOfSynchronousCalls + " " + this.numOfASynchronousCalls + " " + this.numOfReturnEdges);
 			
 			// Write name + # of methods + CBO for each class
-			for (ClassNodes classNode : classNodes) {
-				pw.println("\"" + classNode.getName() + "\" " + classNode.getNumOfMethods() + " " + classNode.getCBO());
+			for (LifelineNode classNode : lifelineNodesList) {
+				pw.println("\"" + classNode.getName() /*+ "\" " + classNode.getNumOfMethods() + " " + classNode.getCBO()*/);
 			}
 
 			pw.close();
@@ -175,18 +175,18 @@ public class StatisticsAnalyzer {
 		return name;
 	}
 	
-	private int getNumOfMethods (String html, String id) {
-		Document doc = Jsoup.parse(html);
-		
-		Element classNodeElement = doc.getElementsByAttributeValueEnding("value", id).first().parent();
-		String methodsString = classNodeElement.getElementsByTag("methods").first().text();
-		String[] methods = methodsString.split("\\s+");
-		
-		int numOfMethods = 0;
-		for (String method : methods) {
-				if(!method.isEmpty()) numOfMethods++;
-		}
-		
-		return numOfMethods;
-	}
+//	private int getNumOfMethods (String html, String id) {
+//		Document doc = Jsoup.parse(html);
+//		
+//		Element classNodeElement = doc.getElementsByAttributeValueEnding("value", id).first().parent();
+//		String methodsString = classNodeElement.getElementsByTag("methods").first().text();
+//		String[] methods = methodsString.split("\\s+");
+//		
+//		int numOfMethods = 0;
+//		for (String method : methods) {
+//				if(!method.isEmpty()) numOfMethods++;
+//		}
+//		
+//		return numOfMethods;
+//	}
 }
