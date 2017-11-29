@@ -7,14 +7,30 @@ import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.horstmann.violet.framework.file.IGraphFile;
+import com.horstmann.violet.framework.file.StatisticsAnalyzer;
+import com.horstmann.violet.product.diagram.abstracts.IGraph;
+import com.horstmann.violet.workspace.IWorkspace;
+import com.horstmann.violet.application.gui.MainFrame;
+
 public class PieChart {
     
     private String objectNameList[];
     private int outMessageList[];
     private int numberObjectsList = 0;
-      
+    
+//    public static MainFrame mainFrame ;
+//    IWorkspace workspace = mainFrame.getActiveWorkspace();
+    public static IGraphFile graphFile;
+    private IGraph graph  = graphFile.getGraph();
+    StatisticsAnalyzer analyzer;
+    
     PieChart()
     {
+//    		System.out.println(graphFile);
+    		
+    		analyzer = new StatisticsAnalyzer(graph, "graph.seq.violet.html");
+    		analyzer.writeStats("test.txt");
         readFile("Stats.txt");
         createPieChart();
     }

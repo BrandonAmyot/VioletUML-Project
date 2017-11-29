@@ -347,9 +347,14 @@ public class FileMenu extends JMenu
                 else
                 {
 	                IWorkspace workspace = (Workspace) mainFrame.getActiveWorkspace();
+	                
+	                
 	                if (workspace != null)
 	                {
 	                    IGraphFile graphFile = workspace.getGraphFile();
+	                    
+	                    PieChart.graphFile = graphFile;
+	                    
 	                    graphFile.saveToNewLocation();
 	                    userPreferencesService.addRecentFile(graphFile);
 	                }

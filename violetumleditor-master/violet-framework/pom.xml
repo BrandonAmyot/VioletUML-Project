@@ -14,6 +14,12 @@
 	</parent>
 	<dependencies>
 		<dependency>
+  			<!-- jsoup HTML parser library @ https://jsoup.org/ -->
+  			<groupId>org.jsoup</groupId>
+  			<artifactId>jsoup</artifactId>
+  			<version>1.11.1</version>
+		</dependency>
+		<dependency>
 			<groupId>antlr</groupId>
 			<artifactId>antlr</artifactId>
 			<version>2.7.5</version>

@@ -52,9 +52,11 @@ public class SequenceDiagramGraph extends AbstractGraph {
 	private boolean runOnce = false;
 
 	@Override
-	public boolean addNode(INode newNode, Point2D p) {
+	public boolean addNode(INode newNode, Point2D p) 
+	{
 		INode foundNode = findNode(p);
-		if (foundNode == null && newNode.getClass().isAssignableFrom(ActivationBarNode.class)) {
+		if (foundNode == null && newNode.getClass().isAssignableFrom(ActivationBarNode.class)) 
+		{
 			return false;
 		}
 
@@ -95,16 +97,16 @@ public class SequenceDiagramGraph extends AbstractGraph {
             {    			   			
                 if(this.getAllEdges().size() > 0)
                 {
-                    int edge_count = 0;
+                    int countEdges = 0;
                     for(IEdge edge : this.getAllEdges())
                     {
                         if(node == edge.getStartNode())
                         {
-                        	edge_count++;
+                        	countEdges++;
                         }
                     }
                     
-                    if(edge_count >= 5)
+                    if(countEdges >= 5)
                     {
                     	shouldSuggestPattern = true;
                     	
@@ -116,6 +118,12 @@ public class SequenceDiagramGraph extends AbstractGraph {
                     	
                     	return;
                     }
+                    else
+                    {
+                    	shouldSuggestPattern = false;
+                    
+                    }
+                    
                 }
 
                 else
@@ -132,28 +140,40 @@ public class SequenceDiagramGraph extends AbstractGraph {
 		// CHANGED*******************************************************************
 		// Checks through entire graph to see if at least 1 activation bar has no
 		// connecting edges (meaning it's empty)
-		public void checkEmptyBars() {
-			for (INode node : this.getAllNodes()) {
-				if (node instanceof ActivationBarNode) {
-					if (this.getAllEdges().size() > 0) {
-						int edge_count = 0;
-						for (IEdge edge : this.getAllEdges()) {
-							if (node != edge.getStartNode() && node != edge.getEndNode()) {
-								edge_count++;
+		public void checkEmptyBars() 
+		{
+			for (INode node : this.getAllNodes()) 
+			{
+				if (node instanceof ActivationBarNode) 
+				{
+					if (this.getAllEdges().size() > 0) 
+					{
+						int countEdges = 0;
+						for (IEdge edge : this.getAllEdges()) 
+						{
+							if (node != edge.getStartNode() && node != edge.getEndNode()) 
+							{
+								countEdges++;
 
-								if (edge_count == this.getAllEdges().size()) {
+								if (countEdges == this.getAllEdges().size()) 
+								{
 									areBarsEmpty = true;
 									return;
-								} else {
+								} 
+								else 
+								{
 									areBarsEmpty = false;
 								}
-							} else {
+							} 
+							else 
+							{
 								areBarsEmpty = false;
 							}
 						}
 					}
 
-					else {
+					else 
+					{
 						areBarsEmpty = true;
 						return;
 					}
@@ -161,11 +181,13 @@ public class SequenceDiagramGraph extends AbstractGraph {
 			}
 		}
 
-		public List<INode> getNodePrototypes() {
+		public List<INode> getNodePrototypes() 
+		{
 			return NODE_PROTOTYPES;
 		}
 
-		public List<IEdge> getEdgePrototypes() {
+		public List<IEdge> getEdgePrototypes() 
+		{
 			return EDGE_PROTOTYPES;
 		}
 
