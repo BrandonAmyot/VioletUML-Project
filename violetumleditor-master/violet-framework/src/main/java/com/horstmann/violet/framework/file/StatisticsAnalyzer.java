@@ -35,23 +35,23 @@ public class StatisticsAnalyzer {
 	private class LifelineNode {
 		String id;
 		String name;
-//		int numOfCBO;
+		int numOfCBO;
 //		int numOfMethods;
 		
 		public LifelineNode(String id, String name) {
 			this.id = id;
 			this.name = name;
-//			numOfCBO = 0;
+			numOfCBO = 0;
 //			numOfMethods = 0;
 		}
 		
-//		public void setCBO(int cbo) {
-//			numOfCBO = cbo;
-//		}
+		public void setCBO(int cbo) {
+			numOfCBO = cbo;
+		}
 //		
-//		public int getCBO() {
-//			return numOfCBO;
-//		}
+		public int getCBO() {
+			return numOfCBO;
+		}
 //		
 //		public void setNumOfMethods(int num) {
 //			numOfMethods = num;
@@ -105,11 +105,13 @@ public class StatisticsAnalyzer {
 				
 				lifelineNodesList.add(classNode);
 			}
+			else if(node.getClass().getSimpleName().equals("ActivationBarNode")) {
+				numOfActivationBars++;
+			}
 		}
 		
 		for (IEdge edge : edges) {
 
-//			if(edge.getClass().getSimpleName().equals("SynchronousCallEdge")) numOfActivationBars++;
 			if(edge.getClass().getSimpleName().equals("SynchronousCallEdge")) numOfSynchronousCalls++;
 			if(edge.getClass().getSimpleName().equals("AsynchronousCallEdge")) numOfASynchronousCalls++;
 			if(edge.getClass().getSimpleName().equals("ReturnEdge")) numOfReturnEdges++;
@@ -124,10 +126,11 @@ public class StatisticsAnalyzer {
 			System.out.println("Writing statistics...");
 			
 			// Write # of classes on first line
-			pw.println(lifelineNodesList.size());
+			pw.println("Number of Lifelines: " + lifelineNodesList.size() + "\n");
 			
 			// Write # of relationships
-			pw.println(this.numOfActivationBars + " " + this.numOfSynchronousCalls + " " + this.numOfASynchronousCalls + " " + this.numOfReturnEdges);
+			pw.println("Activation Bars: " + this.numOfActivationBars + "\nSynchronous Calls: " + this.numOfSynchronousCalls 
+						+ "\nASynchronous Calls: " + this.numOfASynchronousCalls + "\nReturn Edges: " + this.numOfReturnEdges);
 			
 			// Write name + # of methods
 			for (LifelineNode classNode : lifelineNodesList) {

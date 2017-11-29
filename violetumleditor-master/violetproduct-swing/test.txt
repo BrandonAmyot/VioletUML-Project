@@ -1,5 +1,8 @@
-3
-0 2 0 1
-"c"
-"b"
-"a"
+Number of Lifelines: 3
+Activation Bars: 5
+Synchronous Calls: 3
+ASynchronous Calls: 0
+Return Edges: 2
+"line3"
+"line2"
+"line1"
