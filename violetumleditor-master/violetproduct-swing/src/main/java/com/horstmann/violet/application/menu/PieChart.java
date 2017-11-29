@@ -18,7 +18,7 @@ public class PieChart {
     private String objectNameList[];
     private int outMessageList[];
     private int numberObjectsList = 0;
-//    
+    
 //    public static MainFrame mainFrame ;
 //    IWorkspace workspace = mainFrame.getActiveWorkspace();
     public static IGraphFile graphFile;
@@ -27,8 +27,8 @@ public class PieChart {
     
     PieChart()
     {
-    		System.out.println(graphFile);
-    	
+//    		System.out.println(graphFile);
+    		
     		analyzer = new StatisticsAnalyzer(graph, "graph.seq.violet.html");
     		analyzer.writeStats("test.txt");
         readFile("Stats.txt");
