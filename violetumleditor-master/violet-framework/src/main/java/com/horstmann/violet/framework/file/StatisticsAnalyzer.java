@@ -111,7 +111,7 @@ public class StatisticsAnalyzer {
 			System.out.println("Writing statistics...");
 			
 			// Write number of lifelines
-			writer.println("Number of Lifelines: " + lifelineNodesList.size() + "\n");
+			writer.println("Number of Lifelines: " + lifelineNodesList.size());
 			
 			// Write lifeline name and number of children
 			for (LifelineNode classNode : lifelineNodesList) {
@@ -119,7 +119,7 @@ public class StatisticsAnalyzer {
 			}
 			
 			// Write number of relationships
-			writer.println("Number of relationships:\n\n Activation Bars: " + this.numOfActivationBars + "\nSynchronous Calls: " + this.numOfSynchronousCalls 
+			writer.println("\nNumber of relationships:\nActivation Bars: " + this.numOfActivationBars + "\nSynchronous Calls: " + this.numOfSynchronousCalls 
 						+ "\nASynchronous Calls: " + this.numOfASynchronousCalls + "\nReturn Edges: " + this.numOfReturnEdges);
 			
 

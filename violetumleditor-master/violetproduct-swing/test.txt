@@ -1,9 +1,10 @@
 Number of Lifelines: 3
+"line3": 2 children
+"line2": 1 children
+"line1": 2 children
 
+Number of relationships:
 Activation Bars: 5
 Synchronous Calls: 3
 ASynchronous Calls: 0
 Return Edges: 2
-"line3": 2 children
-"line2": 1 children
-"line1": 2 children
