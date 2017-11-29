@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
@@ -33,36 +34,20 @@ public class StatisticsAnalyzer {
 	private List<LifelineNode> lifelineNodesList;
 
 	private class LifelineNode {
-		String id;
 		String name;
-		int numOfCBO;
-//		int numOfMethods;
+		int numOfChildren;
 		
-		public LifelineNode(String id, String name) {
-			this.id = id;
+		public LifelineNode(String name) {
 			this.name = name;
-			numOfCBO = 0;
-//			numOfMethods = 0;
+			numOfChildren = 0;
 		}
 		
-		public void setCBO(int cbo) {
-			numOfCBO = cbo;
+		public void setNumOfChildren(int number) {
+			numOfChildren = number;
 		}
-//		
-		public int getCBO() {
-			return numOfCBO;
-		}
-//		
-//		public void setNumOfMethods(int num) {
-//			numOfMethods = num;
-//		}
-//		
-//		public int getNumOfMethods() {
-//			return numOfMethods;
-//		}
 		
-		public String getId() {
-			return id;
+		public int getNumOfChildren() {
+			return numOfChildren;
 		}
 		
 		public String getName() {
@@ -98,10 +83,11 @@ public class StatisticsAnalyzer {
 			if(node.getClass().getSimpleName().equals("LifelineNode")) {
 				String id = node.getId().toString();
 				String name = getName(html, id);
-//				int numOfMethods = getNumOfMethods(html, id);			
 				
-				LifelineNode classNode = new LifelineNode(id, name);
-//				classNode.setNumOfMethods(numOfMethods);
+				LifelineNode classNode = new LifelineNode(name);
+				
+				int numOfChildren = node.getChildren().size();			
+				classNode.setNumOfChildren(numOfChildren);
 				
 				lifelineNodesList.add(classNode);
 			}
@@ -111,7 +97,6 @@ public class StatisticsAnalyzer {
 		}
 		
 		for (IEdge edge : edges) {
-
 			if(edge.getClass().getSimpleName().equals("SynchronousCallEdge")) numOfSynchronousCalls++;
 			if(edge.getClass().getSimpleName().equals("AsynchronousCallEdge")) numOfASynchronousCalls++;
 			if(edge.getClass().getSimpleName().equals("ReturnEdge")) numOfReturnEdges++;
@@ -122,22 +107,23 @@ public class StatisticsAnalyzer {
 	public void writeStats(String filename) {
 
 		try {
-			PrintWriter pw = new PrintWriter(new FileOutputStream(filename));
+			PrintWriter writer = new PrintWriter(new FileOutputStream(filename));
 			System.out.println("Writing statistics...");
 			
-			// Write # of classes on first line
-			pw.println("Number of Lifelines: " + lifelineNodesList.size() + "\n");
+			// Write number of lifelines
+			writer.println("Number of Lifelines: " + lifelineNodesList.size() + "\n");
 			
-			// Write # of relationships
-			pw.println("Activation Bars: " + this.numOfActivationBars + "\nSynchronous Calls: " + this.numOfSynchronousCalls 
+			// Write lifeline name and number of children
+			for (LifelineNode classNode : lifelineNodesList) {
+				writer.println("\"" + classNode.getName() + "\"" + ": " + classNode.getNumOfChildren() + " children");
+			}
+			
+			// Write number of relationships
+			writer.println("Number of relationships:\n\n Activation Bars: " + this.numOfActivationBars + "\nSynchronous Calls: " + this.numOfSynchronousCalls 
 						+ "\nASynchronous Calls: " + this.numOfASynchronousCalls + "\nReturn Edges: " + this.numOfReturnEdges);
 			
-			// Write name + # of methods
-			for (LifelineNode classNode : lifelineNodesList) {
-				pw.println("\"" + classNode.getName() + "\"" /*+ "\" " + classNode.getNumOfMethods() + " " + classNode.getCBO()*/);
-			}
 
-			pw.close();
+			writer.close();
 			System.out.println("Success! The statistic file is located at '" + filename + "'");
 		} catch (FileNotFoundException e) {
 			System.err.println("Could not write to " + filename + ":");
@@ -178,18 +164,4 @@ public class StatisticsAnalyzer {
 		return name;
 	}
 	
-//	private int getNumOfMethods (String html, String id) {
-//		Document doc = Jsoup.parse(html);
-//		
-//		Element classNodeElement = doc.getElementsByAttributeValueEnding("value", id).first().parent();
-//		String methodsString = classNodeElement.getElementsByTag("methods").first().text();
-//		String[] methods = methodsString.split("\\s+");
-//		
-//		int numOfMethods = 0;
-//		for (String method : methods) {
-//				if(!method.isEmpty()) numOfMethods++;
-//		}
-//		
-//		return numOfMethods;
-//	}
 }
