@@ -330,7 +330,6 @@ public class FileMenu extends JMenu
         {
             public void actionPerformed(ActionEvent e)
             {
-            	//J CHANGED*******************************************************************
             	// Give an error depending on what the check methods return               
                 if(SequenceDiagramGraph.areBarsEmpty == true)
                 {
@@ -379,7 +378,6 @@ public class FileMenu extends JMenu
         {
             public void actionPerformed(ActionEvent e)
             {
-            	//J CHANGED*******************************************************************
             	// Give an error depending on what the check methods return               
                 if(SequenceDiagramGraph.areBarsEmpty == true)
                 {
