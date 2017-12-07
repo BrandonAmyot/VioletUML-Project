@@ -20,12 +20,14 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
+import com.horstmann.violet.framework.file.IGraphFile;
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
 import com.horstmann.violet.product.diagram.abstracts.edge.IEdge;
 import com.horstmann.violet.product.diagram.abstracts.node.INode;
 
 public class StatisticsAnalyzer {
-	private IGraph graph;
+	public static IGraphFile graphFile;
+	private IGraph graph = graphFile.getGraph();
 	private String HtmlFile;
 	private int numOfActivationBars;
 	private int numOfSynchronousCalls;
@@ -60,8 +62,7 @@ public class StatisticsAnalyzer {
 		}
 	}
 	
-	public StatisticsAnalyzer(IGraph graph, String HtmlFile) {
-		this.graph = graph;
+	public StatisticsAnalyzer(String HtmlFile) {
 		this.HtmlFile = HtmlFile;
 		numOfActivationBars = 0;
 		numOfSynchronousCalls = 0;

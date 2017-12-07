@@ -354,6 +354,7 @@ public class FileMenu extends JMenu
 	                    IGraphFile graphFile = workspace.getGraphFile();
 	                    
 	                    PieChart.graphFile = graphFile;
+	                    StatisticsAnalyzer.graphFile = graphFile;
 	                    
 	                    graphFile.saveToNewLocation();
 	                    userPreferencesService.addRecentFile(graphFile);

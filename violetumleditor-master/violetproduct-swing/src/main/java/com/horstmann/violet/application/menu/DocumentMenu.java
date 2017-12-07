@@ -34,9 +34,6 @@ public class DocumentMenu extends JMenu
         setEnabled(!workspaceList.isEmpty());
     }
     
-    public static IGraphFile graphFile;
-    private IGraph graph;
-    
     public void updateMenuItem() {
         List<IWorkspace> workspaceList = this.mainFrame.getWorkspaceList();
         setEnabled(!workspaceList.isEmpty());
@@ -72,11 +69,10 @@ public class DocumentMenu extends JMenu
           @Override
           public void actionPerformed(ActionEvent e)
           {
+        	  
         	    StatisticsAnalyzer analyzer;
-        	    graph = graphFile.getGraph();
-        	    
-        	    	analyzer = new StatisticsAnalyzer(graph, "graph.seq.violet.html");
-        	    	analyzer.writeStats("test.txt");   
+        	    	analyzer = new StatisticsAnalyzer("graph.seq.violet.html");
+        	    	analyzer.writeStats("statsExport.txt");   
           }
         });
         

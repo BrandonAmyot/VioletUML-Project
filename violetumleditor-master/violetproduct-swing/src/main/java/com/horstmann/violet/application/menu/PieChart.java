@@ -22,14 +22,14 @@ public class PieChart {
 //    public static MainFrame mainFrame ;
 //    IWorkspace workspace = mainFrame.getActiveWorkspace();
     public static IGraphFile graphFile;
-    private IGraph graph  = graphFile.getGraph();
+    private IGraph graph = graphFile.getGraph();
     StatisticsAnalyzer analyzer;
     
     PieChart()
     {
 //    		System.out.println(graphFile);
     		
-    		analyzer = new StatisticsAnalyzer(graph, "graph.seq.violet.html");
+    		analyzer = new StatisticsAnalyzer("graph.seq.violet.html");
     		analyzer.writeStats("test.txt");
         readFile("Stats.txt");
         createPieChart();
