@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.horstmann.violet.framework.file.IGraphFile;
-import com.horstmann.violet.framework.file.StatisticsAnalyzer;
+import com.horstmann.violet.application.menu.StatisticsAnalyzer;
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
 import com.horstmann.violet.workspace.IWorkspace;
 import com.horstmann.violet.application.gui.MainFrame;

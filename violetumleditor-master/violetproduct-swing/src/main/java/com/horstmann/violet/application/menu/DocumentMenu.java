@@ -9,8 +9,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import com.horstmann.violet.application.gui.MainFrame;
+import com.horstmann.violet.framework.file.IGraphFile;
 import com.horstmann.violet.framework.injection.resources.ResourceBundleInjector;
 import com.horstmann.violet.framework.injection.resources.annotation.ResourceBundleBean;
+import com.horstmann.violet.product.diagram.abstracts.IGraph;
 import com.horstmann.violet.workspace.IWorkspace;
 
 @ResourceBundleBean(resourceReference = MenuFactory.class)
@@ -31,6 +33,9 @@ public class DocumentMenu extends JMenu
         List<IWorkspace> workspaceList = this.mainFrame.getWorkspaceList();
         setEnabled(!workspaceList.isEmpty());
     }
+    
+    public static IGraphFile graphFile;
+    private IGraph graph;
     
     public void updateMenuItem() {
         List<IWorkspace> workspaceList = this.mainFrame.getWorkspaceList();
@@ -67,7 +72,11 @@ public class DocumentMenu extends JMenu
           @Override
           public void actionPerformed(ActionEvent e)
           {
-        	  	PieChart pieChart = new PieChart();   
+        	    StatisticsAnalyzer analyzer;
+        	    graph = graphFile.getGraph();
+        	    
+        	    	analyzer = new StatisticsAnalyzer(graph, "graph.seq.violet.html");
+        	    	analyzer.writeStats("test.txt");   
           }
         });
         

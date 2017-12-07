@@ -1,4 +1,4 @@
-package com.horstmann.violet.framework.file;
+package com.horstmann.violet.application.menu;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
