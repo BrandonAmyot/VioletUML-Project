@@ -63,8 +63,6 @@ public class SequenceDiagramGraph extends AbstractGraph {
 		return super.addNode(newNode, p);
 	}
 
-	// J
-	// CHANGED*******************************************************************
 	// Override draw() to automatically call check methods frequently
 	@Override
 	public void draw(Graphics2D graphics) 
@@ -87,7 +85,6 @@ public class SequenceDiagramGraph extends AbstractGraph {
 	}
 
 
-	//J CHANGED*******************************************************************
     // Checks through entire graph to see if any activation bar has more than 5 calls ongoing
     public void checkGraspSuggestion()
     {
@@ -136,8 +133,6 @@ public class SequenceDiagramGraph extends AbstractGraph {
     }
 	
 
-		// J
-		// CHANGED*******************************************************************
 		// Checks through entire graph to see if at least 1 activation bar has no
 		// connecting edges (meaning it's empty)
 		public void checkEmptyBars() 

@@ -1,4 +1,4 @@
-package com.horstmann.violet.framework.file;
+package com.horstmann.violet.application.menu;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -20,12 +20,14 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
+import com.horstmann.violet.framework.file.IGraphFile;
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
 import com.horstmann.violet.product.diagram.abstracts.edge.IEdge;
 import com.horstmann.violet.product.diagram.abstracts.node.INode;
 
 public class StatisticsAnalyzer {
-	private IGraph graph;
+	public static IGraphFile graphFile;
+	private IGraph graph = graphFile.getGraph();
 	private String HtmlFile;
 	private int numOfActivationBars;
 	private int numOfSynchronousCalls;
@@ -60,8 +62,7 @@ public class StatisticsAnalyzer {
 		}
 	}
 	
-	public StatisticsAnalyzer(IGraph graph, String HtmlFile) {
-		this.graph = graph;
+	public StatisticsAnalyzer(String HtmlFile) {
 		this.HtmlFile = HtmlFile;
 		numOfActivationBars = 0;
 		numOfSynchronousCalls = 0;
@@ -97,9 +98,15 @@ public class StatisticsAnalyzer {
 		}
 		
 		for (IEdge edge : edges) {
-			if(edge.getClass().getSimpleName().equals("SynchronousCallEdge")) numOfSynchronousCalls++;
-			if(edge.getClass().getSimpleName().equals("AsynchronousCallEdge")) numOfASynchronousCalls++;
-			if(edge.getClass().getSimpleName().equals("ReturnEdge")) numOfReturnEdges++;
+			if(edge.getClass().getSimpleName().equals("SynchronousCallEdge")) { 
+				numOfSynchronousCalls++;				
+			}
+			if(edge.getClass().getSimpleName().equals("AsynchronousCallEdge")) { 
+				numOfASynchronousCalls++;				
+			}
+			if(edge.getClass().getSimpleName().equals("ReturnEdge")) { 
+				numOfReturnEdges++;				
+			}
 		}
 		
 	}

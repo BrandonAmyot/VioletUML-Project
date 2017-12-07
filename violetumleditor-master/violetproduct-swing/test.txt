@@ -7,4 +7,4 @@ Number of relationships:
 Activation Bars: 5
 Synchronous Calls: 3
 ASynchronous Calls: 0
-Return Edges: 2
+Return Edges: 3

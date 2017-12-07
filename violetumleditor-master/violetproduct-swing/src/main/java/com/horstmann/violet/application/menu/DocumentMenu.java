@@ -9,8 +9,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import com.horstmann.violet.application.gui.MainFrame;
+import com.horstmann.violet.framework.file.IGraphFile;
 import com.horstmann.violet.framework.injection.resources.ResourceBundleInjector;
 import com.horstmann.violet.framework.injection.resources.annotation.ResourceBundleBean;
+import com.horstmann.violet.product.diagram.abstracts.IGraph;
 import com.horstmann.violet.workspace.IWorkspace;
 
 @ResourceBundleBean(resourceReference = MenuFactory.class)
@@ -58,7 +60,25 @@ public class DocumentMenu extends JMenu
             }
         }
         
-      //Pie Chart for stats.
+        String statisticsTitle = "Generate Statistics";
+        final JMenuItem statsMenuItem = new JMenuItem(statisticsTitle);
+        add(statsMenuItem);
+        statsMenuItem.addActionListener(new ActionListener()
+        {
+          
+          @Override
+          public void actionPerformed(ActionEvent e)
+          {
+        	  
+        	    StatisticsAnalyzer analyzer;
+        	    	analyzer = new StatisticsAnalyzer("graph.seq.violet.html");
+        	    	analyzer.writeStats("statsExport.txt");   
+          }
+        });
+        
+        statsMenuItem.setEnabled(false);
+        
+        // Pie Chart for stats.
         String pieChartTitle = "Generate Pie Chart";
         final JMenuItem pieChartMenuItem = new JMenuItem(pieChartTitle);
         add(pieChartMenuItem);
@@ -80,6 +100,8 @@ public class DocumentMenu extends JMenu
         
         LoginMenu login = new LoginMenu();
         login.pieChartMenuItem = pieChartMenuItem;
+        login.statsMenuItem = statsMenuItem;
+        
         add(loginMenuItem);
         loginMenuItem.addActionListener(new ActionListener()
         {
