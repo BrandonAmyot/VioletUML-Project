@@ -27,6 +27,7 @@ public class LoginMenu {
 	boolean loginSucess = false;
 	
 	public JMenuItem pieChartMenuItem;
+	public JMenuItem statsMenuItem;
 
 	/**
 	 * Launch the application.
@@ -119,6 +120,7 @@ public class LoginMenu {
 				frame.setVisible(false);
 				
 				pieChartMenuItem.setEnabled(true);
+				statsMenuItem.setEnabled(true);
 			}
 			else
 			{

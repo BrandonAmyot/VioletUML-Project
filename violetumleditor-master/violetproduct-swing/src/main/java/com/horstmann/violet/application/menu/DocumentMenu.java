@@ -58,7 +58,22 @@ public class DocumentMenu extends JMenu
             }
         }
         
-      //Pie Chart for stats.
+        String statisticsTitle = "Generate Statistics";
+        final JMenuItem statsMenuItem = new JMenuItem(statisticsTitle);
+        add(statsMenuItem);
+        statsMenuItem.addActionListener(new ActionListener()
+        {
+          
+          @Override
+          public void actionPerformed(ActionEvent e)
+          {
+        	  	PieChart pieChart = new PieChart();   
+          }
+        });
+        
+        statsMenuItem.setEnabled(false);
+        
+        // Pie Chart for stats.
         String pieChartTitle = "Generate Pie Chart";
         final JMenuItem pieChartMenuItem = new JMenuItem(pieChartTitle);
         add(pieChartMenuItem);
@@ -80,6 +95,8 @@ public class DocumentMenu extends JMenu
         
         LoginMenu login = new LoginMenu();
         login.pieChartMenuItem = pieChartMenuItem;
+        login.statsMenuItem = statsMenuItem;
+        
         add(loginMenuItem);
         loginMenuItem.addActionListener(new ActionListener()
         {

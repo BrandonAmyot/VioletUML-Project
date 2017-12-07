@@ -97,9 +97,15 @@ public class StatisticsAnalyzer {
 		}
 		
 		for (IEdge edge : edges) {
-			if(edge.getClass().getSimpleName().equals("SynchronousCallEdge")) numOfSynchronousCalls++;
-			if(edge.getClass().getSimpleName().equals("AsynchronousCallEdge")) numOfASynchronousCalls++;
-			if(edge.getClass().getSimpleName().equals("ReturnEdge")) numOfReturnEdges++;
+			if(edge.getClass().getSimpleName().equals("SynchronousCallEdge")) { 
+				numOfSynchronousCalls++;				
+			}
+			if(edge.getClass().getSimpleName().equals("AsynchronousCallEdge")) { 
+				numOfASynchronousCalls++;				
+			}
+			if(edge.getClass().getSimpleName().equals("ReturnEdge")) { 
+				numOfReturnEdges++;				
+			}
 		}
 		
 	}
